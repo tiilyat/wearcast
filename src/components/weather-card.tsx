@@ -1,25 +1,25 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Thermometer, Wind, Droplets, Sun } from "lucide-react"
-import type { WeatherData } from "#/lib/schemas"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Thermometer, Wind, Droplets, Sun } from 'lucide-react'
+import type { WeatherData } from '#/lib/schemas'
 
 export function WeatherCard({ weather }: { weather: WeatherData }) {
   return (
     <Card className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <CardHeader className="pb-1 pt-4 px-4">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+      <CardHeader>
+        <CardTitle className="text-muted-foreground">
           Погода в {weather.city}
         </CardTitle>
       </CardHeader>
-      <CardContent className="px-4 pb-4 pt-0">
+      <CardContent>
         <div className="flex items-center justify-between">
           <div className="text-4xl font-bold">
-            {weather.temp > 0 ? "+" : ""}
+            {weather.temp > 0 ? '+' : ''}
             {weather.temp}°
           </div>
           <div className="space-y-1 text-right text-sm text-muted-foreground">
             <div className="flex items-center justify-end gap-1">
               <Thermometer className="h-3 w-3" />
-              Ощущается {weather.feelsLike > 0 ? "+" : ""}
+              Ощущается {weather.feelsLike > 0 ? '+' : ''}
               {weather.feelsLike}°
             </div>
             <div className="flex items-center justify-end gap-1">

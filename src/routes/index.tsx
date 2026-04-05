@@ -1,32 +1,46 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Loader2, AlertCircle } from "lucide-react"
-import { CityInput } from "#/components/city-input"
-import { ActivitySelect } from "#/components/activity-select"
-import { WeatherCard } from "#/components/weather-card"
-import { OutfitResult } from "#/components/outfit-result"
-import { getWeather } from "#/server/weather"
-import { getOutfitRecommendation } from "#/server/outfit"
-import type { ActivityType, WeatherData, OutfitRecommendation } from "#/lib/schemas"
+import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Loader2, AlertCircle } from 'lucide-react'
+import { CityInput } from '#/components/city-input'
+import { ActivitySelect } from '#/components/activity-select'
+import { WeatherCard } from '#/components/weather-card'
+import { OutfitResult } from '#/components/outfit-result'
+import { getWeather } from '#/server/weather'
+import { getOutfitRecommendation } from '#/server/outfit'
+import type {
+  ActivityType,
+  WeatherData,
+  OutfitRecommendation,
+} from '#/lib/schemas'
 
-export const Route = createFileRoute("/")({ component: HomePage })
+export const Route = createFileRoute('/')({ component: HomePage })
 
 function HomePage() {
-  const [city, setCity] = useState("")
-  const [activity, setActivity] = useState<ActivityType | null>(null)
+  const [city, setCity] = useState('')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('wearcast-city')
+    if (saved) setCity(saved)
+  }, [])
+  const [activity, setActivity] = useState<ActivityType>('walking')
   const [weather, setWeather] = useState<WeatherData | null>(null)
-  const [recommendation, setRecommendation] = useState<OutfitRecommendation | null>(null)
+  const [recommendation, setRecommendation] =
+    useState<OutfitRecommendation | null>(null)
   const [loadingWeather, setLoadingWeather] = useState(false)
   const [loadingOutfit, setLoadingOutfit] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const canSubmit = city.trim().length > 0 && activity !== null && !loadingWeather && !loadingOutfit
+  const canSubmit =
+    city &&
+    city.trim().length > 0 &&
+    !loadingWeather &&
+    !loadingOutfit
 
   async function handleSubmit() {
-    if (!canSubmit || !activity) return
+    if (!canSubmit) return
 
     setError(null)
     setWeather(null)
@@ -34,6 +48,7 @@ function HomePage() {
     setLoadingWeather(true)
 
     try {
+      localStorage.setItem('wearcast-city', city.trim())
       const weatherData = await getWeather({ data: { city: city.trim() } })
       setWeather(weatherData)
       setLoadingWeather(false)
@@ -44,7 +59,11 @@ function HomePage() {
       })
       setRecommendation(outfit)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Произошла ошибка. Попробуйте ещё раз.")
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Произошла ошибка. Попробуйте ещё раз.',
+      )
     } finally {
       setLoadingWeather(false)
       setLoadingOutfit(false)
@@ -59,7 +78,7 @@ function HomePage() {
       </div>
 
       <CityInput
-        value={city}
+        value={city ?? ''}
         onChange={setCity}
         onSubmit={handleSubmit}
         disabled={loadingWeather || loadingOutfit}
@@ -80,10 +99,10 @@ function HomePage() {
         {loadingWeather || loadingOutfit ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            {loadingWeather ? "Получаю погоду..." : "Подбираю одежду..."}
+            {loadingWeather ? 'Получаю погоду...' : 'Подбираю одежду...'}
           </>
         ) : (
-          "Подобрать одежду"
+          'Подобрать одежду'
         )}
       </Button>
 
