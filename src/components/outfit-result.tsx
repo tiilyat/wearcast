@@ -25,15 +25,13 @@ export function OutfitResult({ recommendation }: { recommendation: OutfitRecomme
           {recommendation.layers.map((layer, i) => (
             <div
               key={i}
-              className="flex items-center gap-3 rounded-lg bg-muted p-3"
+              className="rounded-lg bg-muted p-3 space-y-1"
             >
-              <Badge variant={layer.type === "outer" ? "default" : "secondary"} className="text-xs shrink-0">
+              <Badge variant={layer.type === "outer" ? "default" : "secondary"} className="text-xs">
                 {layerLabels[layer.type]}
               </Badge>
-              <div className="min-w-0">
-                <div className="text-sm font-medium">{layer.item}</div>
-                <div className="text-xs text-muted-foreground">{layer.reason}</div>
-              </div>
+              <div className="text-sm font-medium">{layer.item}</div>
+              <div className="text-xs text-muted-foreground">{layer.reason}</div>
             </div>
           ))}
         </div>
