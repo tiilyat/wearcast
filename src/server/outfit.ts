@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start"
-import { generateObject } from "ai"
+import { generateText, Output } from "ai"
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import { z } from "zod"
 import { OutfitRecommendation, WeatherData, ActivityType } from "#/lib/schemas"
@@ -32,9 +32,9 @@ export const getOutfitRecommendation = createServerFn({ method: "POST" })
 
     const openrouter = createOpenRouter({ apiKey })
 
-    const { object } = await generateObject({
+    const { output } = await generateText({
       model: openrouter("google/gemini-2.5-flash-preview"),
-      schema: OutfitRecommendation,
+      output: Output.object({ schema: OutfitRecommendation }),
       system: SYSTEM_PROMPT,
       prompt: `Погода в городе ${data.weather.city}:
 - Температура: ${data.weather.temp}°C
@@ -51,5 +51,9 @@ export const getOutfitRecommendation = createServerFn({ method: "POST" })
 Дай рекомендацию по одежде.`,
     })
 
-    return object
+    if (!output) {
+      throw new Error("Не удалось получить рекомендацию. Попробуйте ещё раз.")
+    }
+
+    return output
   })
