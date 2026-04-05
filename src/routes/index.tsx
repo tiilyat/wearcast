@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { Loader2, AlertCircle, Shirt } from 'lucide-react'
+import { WardrobeDrawer, readWardrobe } from '#/components/wardrobe-drawer'
+import type { Wardrobe } from '#/lib/schemas'
 import { CityInput } from '#/components/city-input'
 import { ActivitySelect } from '#/components/activity-select'
 import { WeatherCard } from '#/components/weather-card'
@@ -32,6 +34,12 @@ function HomePage() {
   const [loadingWeather, setLoadingWeather] = useState(false)
   const [loadingOutfit, setLoadingOutfit] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [wardrobe, setWardrobe] = useState<Wardrobe | null>(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
+  useEffect(() => {
+    setWardrobe(readWardrobe())
+  }, [])
 
   const canSubmit =
     city &&
@@ -55,7 +63,7 @@ function HomePage() {
 
       setLoadingOutfit(true)
       const outfit = await getOutfitRecommendation({
-        data: { weather: weatherData, activity },
+        data: { weather: weatherData, activity, wardrobe: wardrobe ?? undefined },
       })
       setRecommendation(outfit)
     } catch (err) {
@@ -88,6 +96,29 @@ function HomePage() {
         value={activity}
         onChange={setActivity}
         disabled={loadingWeather || loadingOutfit}
+      />
+
+      <div className="flex gap-2">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => setDrawerOpen(true)}
+          disabled={loadingWeather || loadingOutfit}
+        >
+          <Shirt className="mr-2 h-4 w-4" />
+          Мой гардероб
+          {wardrobe && (
+            <span className="ml-auto rounded-full bg-primary text-primary-foreground text-xs px-1.5 py-0.5">
+              {Object.values(wardrobe).flat().length}
+            </span>
+          )}
+        </Button>
+      </div>
+
+      <WardrobeDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        onSave={setWardrobe}
       />
 
       <Button
