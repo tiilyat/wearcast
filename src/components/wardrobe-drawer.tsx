@@ -101,7 +101,7 @@ export function WardrobeDrawer({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto px-6">
-        <SheetHeader>
+        <SheetHeader className="px-0">
           <SheetTitle>Мой гардероб</SheetTitle>
           <SheetDescription>
             Отметьте вещи, которые у вас есть — рекомендации будут точнее
