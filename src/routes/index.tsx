@@ -1,87 +1,131 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Loader2, AlertCircle } from "lucide-react"
+import { CityInput } from "#/components/city-input"
+import { ActivitySelect } from "#/components/activity-select"
+import { WeatherCard } from "#/components/weather-card"
+import { OutfitResult } from "#/components/outfit-result"
+import { getWeather } from "#/server/weather"
+import { getOutfitRecommendation } from "#/server/outfit"
+import type { ActivityType, WeatherData, OutfitRecommendation } from "#/lib/schemas"
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute("/")({ component: HomePage })
 
-function App() {
+function HomePage() {
+  const [city, setCity] = useState("")
+  const [activity, setActivity] = useState<ActivityType | null>(null)
+  const [weather, setWeather] = useState<WeatherData | null>(null)
+  const [recommendation, setRecommendation] = useState<OutfitRecommendation | null>(null)
+  const [loadingWeather, setLoadingWeather] = useState(false)
+  const [loadingOutfit, setLoadingOutfit] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const canSubmit = city.trim().length > 0 && activity !== null && !loadingWeather && !loadingOutfit
+
+  async function handleSubmit() {
+    if (!canSubmit || !activity) return
+
+    setError(null)
+    setWeather(null)
+    setRecommendation(null)
+    setLoadingWeather(true)
+
+    try {
+      const weatherData = await getWeather({ data: { city: city.trim() } })
+      setWeather(weatherData)
+      setLoadingWeather(false)
+
+      setLoadingOutfit(true)
+      const outfit = await getOutfitRecommendation({
+        data: { weather: weatherData, activity },
+      })
+      setRecommendation(outfit)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Произошла ошибка. Попробуйте ещё раз.")
+    } finally {
+      setLoadingWeather(false)
+      setLoadingOutfit(false)
+    }
+  }
+
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(47,106,74,0.18),transparent_66%)]" />
-        <p className="island-kicker mb-3">TanStack Start Base Template</p>
-        <h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
-          Start simple, ship quickly.
-        </h1>
-        <p className="mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-          This base starter intentionally keeps things light: two routes, clean
-          structure, and the essentials you need to build from scratch.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="/about"
-            className="rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]"
-          >
-            About This Starter
-          </a>
-          <a
-            href="https://tanstack.com/router"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-[rgba(23,58,64,0.2)] bg-white/50 px-5 py-2.5 text-sm font-semibold text-[var(--sea-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[rgba(23,58,64,0.35)]"
-          >
-            Router Guide
-          </a>
-        </div>
-      </section>
+    <main className="mx-auto flex min-h-screen max-w-md flex-col gap-4 px-4 py-8">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold tracking-tight">WearCast</h1>
+        <p className="text-sm text-muted-foreground">Что надеть сегодня?</p>
+      </div>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          [
-            'Type-Safe Routing',
-            'Routes and links stay in sync across every page.',
-          ],
-          [
-            'Server Functions',
-            'Call server code from your UI without creating API boilerplate.',
-          ],
-          [
-            'Streaming by Default',
-            'Ship progressively rendered responses for faster experiences.',
-          ],
-          [
-            'Tailwind Native',
-            'Design quickly with utility-first styling and reusable tokens.',
-          ],
-        ].map(([title, desc], index) => (
-          <article
-            key={title}
-            className="island-shell feature-card rise-in rounded-2xl p-5"
-            style={{ animationDelay: `${index * 90 + 80}ms` }}
-          >
-            <h2 className="mb-2 text-base font-semibold text-[var(--sea-ink)]">
-              {title}
-            </h2>
-            <p className="m-0 text-sm text-[var(--sea-ink-soft)]">{desc}</p>
-          </article>
-        ))}
-      </section>
+      <CityInput
+        value={city}
+        onChange={setCity}
+        onSubmit={handleSubmit}
+        disabled={loadingWeather || loadingOutfit}
+      />
 
-      <section className="island-shell mt-8 rounded-2xl p-6">
-        <p className="island-kicker mb-2">Quick Start</p>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--sea-ink-soft)]">
-          <li>
-            Edit <code>src/routes/index.tsx</code> to customize the home page.
-          </li>
-          <li>
-            Update <code>src/components/Header.tsx</code> and{' '}
-            <code>src/components/Footer.tsx</code> for brand links.
-          </li>
-          <li>
-            Add routes in <code>src/routes</code> and tweak visual tokens in{' '}
-            <code>src/styles.css</code>.
-          </li>
-        </ul>
-      </section>
+      <ActivitySelect
+        value={activity}
+        onChange={setActivity}
+        disabled={loadingWeather || loadingOutfit}
+      />
+
+      <Button
+        onClick={handleSubmit}
+        disabled={!canSubmit}
+        className="w-full"
+        size="lg"
+      >
+        {loadingWeather || loadingOutfit ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            {loadingWeather ? "Получаю погоду..." : "Подбираю одежду..."}
+          </>
+        ) : (
+          "Подобрать одежду"
+        )}
+      </Button>
+
+      {error && (
+        <Card className="border-destructive">
+          <CardContent className="flex items-start gap-2 pt-4">
+            <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-destructive" />
+            <div className="space-y-2">
+              <p className="text-sm text-destructive">{error}</p>
+              <Button variant="outline" size="sm" onClick={handleSubmit}>
+                Попробовать снова
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {loadingWeather && (
+        <Card>
+          <CardContent className="pt-4 space-y-2">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-10 w-20" />
+            <Skeleton className="h-4 w-48" />
+          </CardContent>
+        </Card>
+      )}
+
+      {weather && <WeatherCard weather={weather} />}
+
+      {loadingOutfit && (
+        <Card>
+          <CardContent className="pt-4 space-y-2">
+            <Skeleton className="h-4 w-28" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+          </CardContent>
+        </Card>
+      )}
+
+      {recommendation && <OutfitResult recommendation={recommendation} />}
     </main>
   )
 }
