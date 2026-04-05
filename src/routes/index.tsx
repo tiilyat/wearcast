@@ -5,18 +5,16 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Loader2, AlertCircle, Shirt } from 'lucide-react'
 import { WardrobeDrawer, readWardrobe } from '#/components/wardrobe-drawer'
-import type { Wardrobe } from '#/lib/schemas'
+import type { Wardrobe,
+  ActivityType,
+  WeatherData,
+  OutfitRecommendation } from '#/lib/schemas'
 import { CityInput } from '#/components/city-input'
 import { ActivitySelect } from '#/components/activity-select'
 import { WeatherCard } from '#/components/weather-card'
 import { OutfitResult } from '#/components/outfit-result'
 import { getWeather } from '#/server/weather'
 import { getOutfitRecommendation } from '#/server/outfit'
-import type {
-  ActivityType,
-  WeatherData,
-  OutfitRecommendation,
-} from '#/lib/schemas'
 
 export const Route = createFileRoute('/')({ component: HomePage })
 
@@ -42,10 +40,7 @@ function HomePage() {
   }, [])
 
   const canSubmit =
-    city &&
-    city.trim().length > 0 &&
-    !loadingWeather &&
-    !loadingOutfit
+    city && city.trim().length > 0 && !loadingWeather && !loadingOutfit
 
   async function handleSubmit() {
     if (!canSubmit) return
@@ -63,7 +58,11 @@ function HomePage() {
 
       setLoadingOutfit(true)
       const outfit = await getOutfitRecommendation({
-        data: { weather: weatherData, activity, wardrobe: wardrobe ?? undefined },
+        data: {
+          weather: weatherData,
+          activity,
+          wardrobe: wardrobe ?? undefined,
+        },
       })
       setRecommendation(outfit)
     } catch (err) {
@@ -86,7 +85,7 @@ function HomePage() {
       </div>
 
       <CityInput
-        value={city ?? ''}
+        value={city}
         onChange={setCity}
         onSubmit={handleSubmit}
         disabled={loadingWeather || loadingOutfit}

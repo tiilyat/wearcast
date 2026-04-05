@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet"
+} from '@/components/ui/sheet'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
-import { WARDROBE_ITEMS, LAYER_LABELS } from "#/lib/wardrobe-items"
-import { Wardrobe } from "#/lib/schemas"
-import type { LayerType } from "#/lib/schemas"
+} from '@/components/ui/accordion'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Button } from '@/components/ui/button'
+import { WARDROBE_ITEMS, LAYER_LABELS } from '#/lib/wardrobe-items'
+import { Wardrobe } from '#/lib/schemas'
+import type { LayerType } from '#/lib/schemas'
 
-const STORAGE_KEY = "wearcast-wardrobe"
-const LAYER_ORDER: LayerType[] = ["base", "mid", "outer", "accessory"]
+const STORAGE_KEY = 'wearcast-wardrobe'
+const LAYER_ORDER: LayerType[] = ['base', 'mid', 'outer', 'accessory']
 
 export function readWardrobe(): Wardrobe | null {
   try {
@@ -63,15 +63,13 @@ export function WardrobeDrawer({
   useEffect(() => {
     if (open) {
       const saved = readWardrobe()
-      setSelected(
-        saved ?? { base: [], mid: [], outer: [], accessory: [] },
-      )
+      setSelected(saved ?? { base: [], mid: [], outer: [], accessory: [] })
     }
   }, [open])
 
   function toggleItem(layer: LayerType, item: string) {
     setSelected((prev) => {
-      const items = prev[layer] ?? []
+      const items = prev[layer]
       const next = items.includes(item)
         ? items.filter((i) => i !== item)
         : [...items, item]
@@ -120,7 +118,7 @@ export function WardrobeDrawer({
                       className="flex items-center gap-2 rounded-md p-2 hover:bg-muted cursor-pointer"
                     >
                       <Checkbox
-                        checked={selected[layer]?.includes(item) ?? false}
+                        checked={selected[layer].includes(item)}
                         onCheckedChange={() => toggleItem(layer, item)}
                       />
                       <span className="text-sm">{item}</span>
