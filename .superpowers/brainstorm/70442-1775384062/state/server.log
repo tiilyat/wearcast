@@ -1,0 +1,4 @@
+{"type":"server-started","port":55422,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:55422","screen_dir":"/Users/ilyat/projects/wearcast/.superpowers/brainstorm/70442-1775384062/content","state_dir":"/Users/ilyat/projects/wearcast/.superpowers/brainstorm/70442-1775384062/state"}
+{"type":"screen-added","file":"/Users/ilyat/projects/wearcast/.superpowers/brainstorm/70442-1775384062/content/layout-options.html"}
+{"type":"screen-added","file":"/Users/ilyat/projects/wearcast/.superpowers/brainstorm/70442-1775384062/content/layout-combined.html"}
+{"type":"screen-added","file":"/Users/ilyat/projects/wearcast/.superpowers/brainstorm/70442-1775384062/content/waiting.html"}

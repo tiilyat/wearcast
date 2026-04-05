@@ -1,0 +1,141 @@
+<h2>WearCast — Layout мобильного экрана</h2>
+<p class="subtitle">Как организовать главный экран? Все варианты mobile-first, single page.</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8fafc;">
+      <div style="max-width: 320px; margin: 0 auto; font-family: system-ui; font-size: 13px;">
+        <!-- Phone mockup A -->
+        <div style="text-align: center; padding: 20px 0 12px;">
+          <div style="font-size: 22px; font-weight: 700; color: #0f172a;">WearCast</div>
+          <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Что надеть сегодня?</div>
+        </div>
+
+        <div style="padding: 0 12px;">
+          <!-- Input -->
+          <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+            <div style="flex:1; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; color: #94a3b8; font-size: 12px;">Введите город...</div>
+            <div style="width: 36px; height: 36px; background: #0f172a; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">📍</div>
+          </div>
+
+          <!-- Activity buttons -->
+          <div style="display: flex; gap: 6px; margin-bottom: 16px;">
+            <div style="flex:1; text-align: center; padding: 10px 4px; border: 2px solid #0f172a; border-radius: 10px; font-size: 11px; font-weight: 600; background: #f8fafc;">🚶 Пешком</div>
+            <div style="flex:1; text-align: center; padding: 10px 4px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 11px; color: #64748b;">🚌 Транспорт</div>
+            <div style="flex:1; text-align: center; padding: 10px 4px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 11px; color: #64748b;">🚗 Машина</div>
+          </div>
+
+          <!-- Button -->
+          <div style="background: #0f172a; color: white; text-align: center; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 16px;">Подобрать одежду</div>
+
+          <!-- Weather card -->
+          <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 10px;">
+            <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Погода в Москве</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-size: 28px; font-weight: 700;">+12°</div>
+              <div style="text-align: right; font-size: 11px; color: #64748b; line-height: 1.6;">
+                Ощущается +8°<br>Ветер 5 м/с<br>Влажность 65%
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommendation -->
+          <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px;">
+            <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Рекомендация</div>
+            <div style="font-size: 12px; color: #334155; margin-bottom: 10px;">Прохладно и ветрено. Наденьте лёгкую куртку поверх свитера.</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 8px; background: #f8fafc; border-radius: 8px; padding: 8px;">
+                <span style="font-size: 10px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: 600;">BASE</span>
+                <span style="font-size: 12px;">Хлопковая футболка</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; background: #f8fafc; border-radius: 8px; padding: 8px;">
+                <span style="font-size: 10px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: 600;">MID</span>
+                <span style="font-size: 12px;">Свитер или худи</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; background: #f8fafc; border-radius: 8px; padding: 8px;">
+                <span style="font-size: 10px; background: #0f172a; color: white; padding: 2px 6px; border-radius: 4px; font-weight: 600;">OUTER</span>
+                <span style="font-size: 12px;">Ветровка</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 16px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Вертикальный поток</h3>
+      <p>Всё на одном экране сверху вниз: ввод → активность → кнопка → погода → рекомендация. Простая прокрутка. Результат появляется ниже формы.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8fafc;">
+      <div style="max-width: 320px; margin: 0 auto; font-family: system-ui; font-size: 13px;">
+        <!-- Phone mockup B -->
+        <div style="text-align: center; padding: 20px 0 12px;">
+          <div style="font-size: 22px; font-weight: 700; color: #0f172a;">WearCast</div>
+        </div>
+
+        <div style="padding: 0 12px;">
+          <!-- Combined input row -->
+          <div style="background: white; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px;">
+            <div style="display: flex; gap: 6px; margin-bottom: 10px;">
+              <div style="flex:1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; color: #94a3b8; font-size: 12px;">Москва</div>
+              <div style="width: 34px; height: 34px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px;">📍</div>
+            </div>
+            <div style="display: flex; gap: 6px; margin-bottom: 10px;">
+              <div style="flex:1; text-align: center; padding: 8px; border: 2px solid #0f172a; border-radius: 8px; font-size: 11px; font-weight: 600;">🚶</div>
+              <div style="flex:1; text-align: center; padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 11px; color: #94a3b8;">🚌</div>
+              <div style="flex:1; text-align: center; padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 11px; color: #94a3b8;">🚗</div>
+            </div>
+            <div style="background: #0f172a; color: white; text-align: center; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 600;">Подобрать</div>
+          </div>
+
+          <!-- Result as single card -->
+          <div style="background: white; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px;">
+            <!-- Weather row inside result -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; margin-bottom: 10px;">
+              <div>
+                <div style="font-size: 24px; font-weight: 700;">+12°</div>
+                <div style="font-size: 11px; color: #94a3b8;">Ощущается +8°</div>
+              </div>
+              <div style="text-align: right; font-size: 11px; color: #64748b; line-height: 1.6;">
+                💨 5 м/с<br>💧 65%<br>☀️ UV 3
+              </div>
+            </div>
+
+            <div style="font-size: 12px; color: #334155; margin-bottom: 10px;">Прохладно и ветрено. Наденьте куртку.</div>
+
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border-radius: 8px; padding: 8px 10px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600;">Футболка</div>
+                  <div style="font-size: 10px; color: #94a3b8;">Базовый слой</div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border-radius: 8px; padding: 8px 10px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600;">Свитер</div>
+                  <div style="font-size: 10px; color: #94a3b8;">Средний слой</div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border-radius: 8px; padding: 8px 10px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600;">Ветровка</div>
+                  <div style="font-size: 10px; color: #94a3b8;">Верхний слой</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 10px; background: #fef3c7; border-radius: 8px; padding: 8px 10px; font-size: 11px; color: #92400e;">⚠️ Ветер усилится к вечеру — возьмите шарф</div>
+          </div>
+        </div>
+        <div style="height: 16px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Компактные карточки</h3>
+      <p>Форма ввода в одной карточке, результат (погода + рекомендация) в другой. Более компактно, меньше прокрутки. Погода и слои объединены.</p>
+    </div>
+  </div>
+</div>
