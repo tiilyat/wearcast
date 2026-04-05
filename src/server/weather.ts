@@ -30,7 +30,7 @@ const UvResponse = z.object({
 })
 
 export const getWeather = createServerFn({ method: "GET" })
-  .validator(z.object({ city: z.string().min(1) }))
+  .inputValidator(z.object({ city: z.string().min(1) }))
   .handler(async ({ data }) => {
     const apiKey = process.env.OPENWEATHER_API_KEY
     if (!apiKey) {

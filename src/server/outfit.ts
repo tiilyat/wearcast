@@ -23,7 +23,7 @@ const activityLabels: Record<ActivityType, string> = {
 }
 
 export const getOutfitRecommendation = createServerFn({ method: "POST" })
-  .validator(z.object({ weather: WeatherData, activity: ActivityType }))
+  .inputValidator(z.object({ weather: WeatherData, activity: ActivityType }))
   .handler(async ({ data }) => {
     const apiKey = process.env.OPENROUTER_API_KEY
     if (!apiKey) {
