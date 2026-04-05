@@ -1,11 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { Footprints, Bus, Car } from "lucide-react"
-import type { ActivityType } from "#/lib/schemas"
+import { Button } from '@/components/ui/button'
+import { Footprints, Bus, Car } from 'lucide-react'
+import type { ActivityType } from '#/lib/schemas'
 
-const activities: { value: ActivityType; label: string; icon: typeof Footprints }[] = [
-  { value: "walking", label: "Пешком", icon: Footprints },
-  { value: "transit", label: "Транспорт", icon: Bus },
-  { value: "driving", label: "Машина", icon: Car },
+const activities: {
+  value: ActivityType
+  label: string
+  icon: typeof Footprints
+}[] = [
+  { value: 'walking', label: 'Пешком', icon: Footprints },
+  { value: 'transit', label: 'Транспорт', icon: Bus },
+  { value: 'driving', label: 'Машина', icon: Car },
 ]
 
 export function ActivitySelect({
@@ -25,7 +29,7 @@ export function ActivitySelect({
         return (
           <Button
             key={activity.value}
-            variant={isSelected ? "default" : "outline"}
+            variant={isSelected ? 'default' : 'outline'}
             className="flex flex-col gap-1 h-auto py-3"
             onClick={() => onChange(activity.value)}
             disabled={disabled}

@@ -1,8 +1,8 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { MapPin, Loader2 } from "lucide-react"
-import { useState } from "react"
-import { reverseGeocode } from "#/server/geocode"
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { MapPin, Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { reverseGeocode } from '#/server/geocode'
 
 export function CityInput({
   value,
@@ -18,7 +18,7 @@ export function CityInput({
   const [locating, setLocating] = useState(false)
 
   function handleGeolocation() {
-    if (!navigator.geolocation) return
+    if (!('geolocation' in navigator)) return
     setLocating(true)
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -49,7 +49,7 @@ export function CityInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && !disabled) onSubmit()
+          if (e.key === 'Enter' && !disabled) onSubmit()
         }}
         disabled={disabled}
         className="flex-1"

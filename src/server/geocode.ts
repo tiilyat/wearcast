@@ -1,12 +1,12 @@
-import { createServerFn } from "@tanstack/react-start"
-import { z } from "zod"
+import { createServerFn } from '@tanstack/react-start'
+import { z } from 'zod'
 
-export const reverseGeocode = createServerFn({ method: "GET" })
+export const reverseGeocode = createServerFn({ method: 'GET' })
   .inputValidator(z.object({ lat: z.number(), lon: z.number() }))
   .handler(async ({ data }) => {
     const apiKey = process.env.OPENWEATHER_API_KEY
     if (!apiKey) {
-      throw new Error("OPENWEATHER_API_KEY is not set")
+      throw new Error('OPENWEATHER_API_KEY is not set')
     }
 
     const res = await fetch(
@@ -14,13 +14,13 @@ export const reverseGeocode = createServerFn({ method: "GET" })
     )
 
     if (!res.ok) {
-      throw new Error("Не удалось определить город")
+      throw new Error('Не удалось определить город')
     }
 
     const results = await res.json()
     if (!Array.isArray(results) || results.length === 0) {
-      throw new Error("Не удалось определить город")
+      throw new Error('Не удалось определить город')
     }
 
-    return (results[0].local_names?.ru as string) ?? (results[0].name as string)
+    return (results[0].local_names?.ru ?? results[0].name) as string
   })
