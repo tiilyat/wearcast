@@ -3,6 +3,12 @@ import { z } from "zod"
 export const ActivityType = z.enum(["walking", "transit", "driving"])
 export type ActivityType = z.infer<typeof ActivityType>
 
+export const LayerType = z.enum(['base', 'mid', 'outer', 'accessory'])
+export type LayerType = z.infer<typeof LayerType>
+
+export const Wardrobe = z.record(LayerType, z.array(z.string()))
+export type Wardrobe = z.infer<typeof Wardrobe>
+
 export const WeatherData = z.object({
   city: z.string(),
   temp: z.number(),
