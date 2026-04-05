@@ -5,12 +5,12 @@ import type { WeatherData } from "#/lib/schemas"
 export function WeatherCard({ weather }: { weather: WeatherData }) {
   return (
     <Card className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-1 pt-4 px-4">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           Погода в {weather.city}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-4 pt-0">
         <div className="flex items-center justify-between">
           <div className="text-4xl font-bold">
             {weather.temp > 0 ? "+" : ""}
