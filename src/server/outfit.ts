@@ -33,7 +33,7 @@ export const getOutfitRecommendation = createServerFn({ method: "POST" })
     const openrouter = createOpenRouter({ apiKey })
 
     const { output } = await generateText({
-      model: openrouter("google/gemini-2.5-flash-preview"),
+      model: openrouter("google/gemini-2.5-flash"),
       output: Output.object({ schema: OutfitRecommendation }),
       system: SYSTEM_PROMPT,
       prompt: `Погода в городе ${data.weather.city}:
