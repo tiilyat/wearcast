@@ -56,11 +56,11 @@
 
 ### Стратегия кэширования
 
-| Тип запроса | Стратегия | Описание |
-|---|---|---|
-| Навигация (HTML) | Network First | При ошибке сети — офлайн-страница |
-| Статика (JS/CSS/изображения) | Cache First | Из кэша, fallback на сеть |
-| API (`/api/`, серверные функции) | Network Only | Не кэшируются |
+| Тип запроса                      | Стратегия     | Описание                          |
+| -------------------------------- | ------------- | --------------------------------- |
+| Навигация (HTML)                 | Network First | При ошибке сети — офлайн-страница |
+| Статика (JS/CSS/изображения)     | Cache First   | Из кэша, fallback на сеть         |
+| API (`/api/`, серверные функции) | Network Only  | Не кэшируются                     |
 
 ### Жизненный цикл
 
@@ -78,7 +78,7 @@
 
 ```js
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
+  navigator.serviceWorker.register('/sw.js')
 }
 ```
 
@@ -103,6 +103,7 @@ if ('serviceWorker' in navigator) {
 ## Scope
 
 ### В скоупе
+
 - Manifest с правильными метаданными
 - Ручной Service Worker с кэшированием шелла
 - Офлайн-страница
@@ -110,6 +111,7 @@ if ('serviceWorker' in navigator) {
 - Мета-теги для PWA в root layout
 
 ### Вне скоупа
+
 - Push-уведомления
 - Офлайн-кэширование данных (погода, рекомендации)
 - Background sync

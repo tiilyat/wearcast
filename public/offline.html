@@ -1,70 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WearCast — Офлайн</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-      background: #ffffff;
-      color: #0a0a0a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 1.5rem;
-    }
-    .container {
-      text-align: center;
-      max-width: 400px;
-    }
-    .icon {
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      color: #737373;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-    button {
-      margin-top: 1.5rem;
-      padding: 0.625rem 1.25rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #ffffff;
-      background: #0a0a0a;
-      border: none;
-      border-radius: 0.625rem;
-      cursor: pointer;
-    }
-    button:active { opacity: 0.8; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="icon">
-      <svg width="80" height="80" viewBox="0 0 120 120" fill="none">
-        <circle cx="60" cy="27" r="4" stroke="#0a0a0a" stroke-width="2.5"/>
-        <line x1="60" y1="31" x2="60" y2="40" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
-        <path d="M60 40 L30 65 L90 65 Z" stroke="#0a0a0a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
-        <ellipse cx="60" cy="80" rx="22" ry="10" fill="#94a3b8"/>
-        <ellipse cx="45" cy="82" rx="12" ry="8" fill="#94a3b8"/>
-        <ellipse cx="75" cy="82" rx="12" ry="8" fill="#94a3b8"/>
-        <line x1="48" y1="92" x2="46" y2="100" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
-        <line x1="60" y1="92" x2="58" y2="100" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
-        <line x1="72" y1="92" x2="70" y2="100" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WearCast — Офлайн</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+        background: #ffffff;
+        color: #0a0a0a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 1.5rem;
+      }
+      .container {
+        text-align: center;
+        max-width: 400px;
+      }
+      .icon {
+        margin-bottom: 1.5rem;
+      }
+      h1 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        color: #737373;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      button {
+        margin-top: 1.5rem;
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: #0a0a0a;
+        border: none;
+        border-radius: 0.625rem;
+        cursor: pointer;
+      }
+      button:active {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="icon">
+        <svg width="80" height="80" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="27" r="4" stroke="#0a0a0a" stroke-width="2.5" />
+          <line
+            x1="60"
+            y1="31"
+            x2="60"
+            y2="40"
+            stroke="#0a0a0a"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M60 40 L30 65 L90 65 Z"
+            stroke="#0a0a0a"
+            stroke-width="3"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            fill="none"
+          />
+          <ellipse cx="60" cy="80" rx="22" ry="10" fill="#94a3b8" />
+          <ellipse cx="45" cy="82" rx="12" ry="8" fill="#94a3b8" />
+          <ellipse cx="75" cy="82" rx="12" ry="8" fill="#94a3b8" />
+          <line
+            x1="48"
+            y1="92"
+            x2="46"
+            y2="100"
+            stroke="#60a5fa"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="60"
+            y1="92"
+            x2="58"
+            y2="100"
+            stroke="#60a5fa"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <line
+            x1="72"
+            y1="92"
+            x2="70"
+            y2="100"
+            stroke="#60a5fa"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+      <h1>Нет подключения к интернету</h1>
+      <p>
+        Проверьте соединение и попробуйте снова. Для работы WearCast нужен
+        доступ к сети.
+      </p>
+      <button onclick="location.reload()">Попробовать снова</button>
     </div>
-    <h1>Нет подключения к интернету</h1>
-    <p>Проверьте соединение и попробуйте снова. Для работы WearCast нужен доступ к сети.</p>
-    <button onclick="location.reload()">Попробовать снова</button>
-  </div>
-</body>
+  </body>
 </html>

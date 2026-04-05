@@ -1,6 +1,6 @@
-import { createServerFn } from "@tanstack/react-start"
-import { z } from "zod"
-import { WeatherData } from "#/lib/schemas"
+import { createServerFn } from '@tanstack/react-start'
+import { z } from 'zod'
+import type { WeatherData } from '#/lib/schemas'
 
 const OpenWeatherResponse = z.object({
   name: z.string(),
@@ -21,33 +21,33 @@ const OpenWeatherResponse = z.object({
     lat: z.number(),
     lon: z.number(),
   }),
-  rain: z.object({ "1h": z.number() }).optional(),
-  snow: z.object({ "1h": z.number() }).optional(),
+  rain: z.object({ '1h': z.number() }).optional(),
+  snow: z.object({ '1h': z.number() }).optional(),
 })
 
 const UvResponse = z.object({
   value: z.number(),
 })
 
-export const getWeather = createServerFn({ method: "GET" })
+export const getWeather = createServerFn({ method: 'GET' })
   .inputValidator(z.object({ city: z.string().min(1) }))
   .handler(async ({ data }) => {
     const apiKey = process.env.OPENWEATHER_API_KEY
     if (!apiKey) {
-      throw new Error("OPENWEATHER_API_KEY is not set")
+      throw new Error('OPENWEATHER_API_KEY is not set')
     }
 
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(data.city)}&units=metric&lang=ru&appid=${apiKey}`
     const weatherRes = await fetch(weatherUrl)
 
     if (weatherRes.status === 404) {
-      throw new Error("Город не найден. Проверьте название.")
+      throw new Error('Город не найден. Проверьте название.')
     }
     if (weatherRes.status === 401) {
-      throw new Error("Ошибка сервера. Попробуйте позже.")
+      throw new Error('Ошибка сервера. Попробуйте позже.')
     }
     if (!weatherRes.ok) {
-      throw new Error("Ошибка при получении погоды. Попробуйте позже.")
+      throw new Error('Ошибка при получении погоды. Попробуйте позже.')
     }
 
     const raw = await weatherRes.json()
@@ -72,7 +72,7 @@ export const getWeather = createServerFn({ method: "GET" })
       feelsLike: Math.round(parsed.main.feels_like),
       humidity: parsed.main.humidity,
       windSpeed: Math.round(parsed.wind.speed),
-      description: parsed.weather[0]?.description ?? "",
+      description: parsed.weather[0]?.description ?? '',
       uvIndex,
       rain: !!parsed.rain,
       snow: !!parsed.snow,

@@ -41,9 +41,7 @@ self.addEventListener('fetch', (event) => {
 
   // Navigation requests: network first, offline fallback
   if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request).catch(() => caches.match('/offline.html')),
-    )
+    event.respondWith(fetch(request).catch(() => caches.match('/offline.html')))
     return
   }
 
