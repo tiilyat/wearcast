@@ -15,7 +15,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { WARDROBE_ITEMS, LAYER_LABELS } from "#/lib/wardrobe-items"
-import type { LayerType, Wardrobe } from "#/lib/schemas"
+import { Wardrobe } from "#/lib/schemas"
+import type { LayerType } from "#/lib/schemas"
 
 const STORAGE_KEY = "wearcast-wardrobe"
 const LAYER_ORDER: LayerType[] = ["base", "mid", "outer", "accessory"]
@@ -24,11 +25,12 @@ export function readWardrobe(): Wardrobe | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return null
-    const parsed = JSON.parse(raw)
-    const hasItems = Object.values(parsed).some(
-      (items) => Array.isArray(items) && items.length > 0,
+    const result = Wardrobe.safeParse(JSON.parse(raw))
+    if (!result.success) return null
+    const hasItems = Object.values(result.data).some(
+      (items) => items.length > 0,
     )
-    return hasItems ? parsed : null
+    return hasItems ? result.data : null
   } catch {
     return null
   }
@@ -98,7 +100,7 @@ export function WardrobeDrawer({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto">
+      <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto px-6">
         <SheetHeader>
           <SheetTitle>Мой гардероб</SheetTitle>
           <SheetDescription>

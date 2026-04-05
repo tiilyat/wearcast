@@ -3,6 +3,7 @@ import { generateText, Output } from "ai"
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import { z } from "zod"
 import { OutfitRecommendation, WeatherData, ActivityType, Wardrobe } from "#/lib/schemas"
+import { LAYER_LABELS } from "#/lib/wardrobe-items"
 
 const SYSTEM_PROMPT = `Ты — стилист-метеоролог. Твоя задача — рекомендовать одежду на основе погоды и типа активности.
 
@@ -46,10 +47,7 @@ export const getOutfitRecommendation = createServerFn({ method: "POST" })
       const lines = Object.entries(data.wardrobe)
         .filter(([, items]) => items.length > 0)
         .map(([layer, items]) => {
-          const label =
-            layer === "base" ? "Базовый слой" :
-            layer === "mid" ? "Средний слой" :
-            layer === "outer" ? "Верхний слой" : "Аксессуары"
+          const label = LAYER_LABELS[layer as keyof typeof LAYER_LABELS] ?? layer
           return `${label}: ${items.join(", ")}`
         })
         .join("\n")
